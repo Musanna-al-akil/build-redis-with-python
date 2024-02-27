@@ -1,5 +1,6 @@
 # Uncomment this to pass the first stage
 import socket
+import threading
 
 def handleConnect(conn, data):
     with conn:
@@ -16,10 +17,13 @@ def main():
     # Uncomment this to pass the first stage
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    conn, addr = server_socket.accept()
+    
     
     #the with statement used for continuse use case
-    handleConnect(conn,pong)    
+    while True:
+        conn, addr = server_socket.accept()
+        conn_thread = threading.Thread(target=handleConnect, args=(conn,pong))
+        conn_thread.start()
 
 
 if __name__ == "__main__":
