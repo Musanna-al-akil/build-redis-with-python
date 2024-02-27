@@ -3,8 +3,9 @@ import socket
 
 def handleConnect(conn, data):
     with conn:
-        conn.recv(1024)
-        conn.send(data.encode())
+        while True:
+            conn.recv(1024)
+            conn.send(data.encode())
 
 def main():
     # You can use print statements as follows for debugging, they'll be visible when running tests.
